@@ -96,9 +96,9 @@ def maxf(x):
 
 for i in range(1):
 	a = 0.15+i/20
-	area = dblquad(lambda x, y: I_sqrt(a,x,y), 0, a, lambda x: 0, lambda x: a)
+	area = dblquad(lambda x, y: I_sqrt(a,x,y), 0, a/2, lambda x: 0, lambda x: math.sqrt(3)*x)
 	moy = area[0]/a/a
-	sm = dblquad(lambda x, y: (I_sqrt(a,x,y)-moy)**2, 0, a, lambda x: 0, lambda x: a)
+	sm = dblquad(lambda x, y: (I_sqrt(a,x,y)-moy)**2, 0, a/2, lambda x: 0, lambda x: math.sqrt(3)*x)
 #area = dblquad(lambda x, y: I_tst(a,x,y), 0, a, lambda x: 0, lambda x: a)
 #area = dblquad(lambda x, y: I_tst(a,x,y), 0, a, lambda x: 0, lambda x: a)
 	print(a,sm)

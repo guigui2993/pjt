@@ -51,10 +51,26 @@ def I_tst(a,x,y):
 	#return max(0,a)
 
 def I_sqrt(a,X,Y):
-	Z = 0
-	for x in range(-5,6):
-		for y in range(-5,6):
-			Z += I(np.arctan(np.sqrt((X-a*x)**2+(Y-a*y)**2)))
+	Z = I(np.arctan(np.sqrt(X**2+Y**2)))
+	Z += I(np.arctan(np.sqrt((X-a)**2+Y**2)))
+	Z += I(np.arctan(np.sqrt(X**2+(Y-a)**2)))
+	Z += I(np.arctan(np.sqrt((X-a)**2+(Y-a)**2)))
+	
+	Z += I(np.arctan(np.sqrt((X-2*a)**2+Y**2)))
+	Z += I(np.arctan(np.sqrt((X-2*a)**2+(Y-a)**2)))
+	Z += I(np.arctan(np.sqrt(X**2+(Y-2*a)**2)))
+	Z += I(np.arctan(np.sqrt((X-a)**2+(Y-2*a)**2)))
+
+	Z += I(np.arctan(np.sqrt((X+a)**2+Y**2)))
+	Z += I(np.arctan(np.sqrt((X+a)**2+(Y-a)**2)))
+	
+	Z += I(np.arctan(np.sqrt(X**2+(Y+a)**2)))
+	Z += I(np.arctan(np.sqrt((X-a)**2+(Y+a)**2)))
+	
+	Z += I(np.arctan(np.sqrt((X+a)**2+(Y+a)**2)))
+	Z += I(np.arctan(np.sqrt((X-2*a)**2+(Y+a)**2)))
+	Z += I(np.arctan(np.sqrt((X+a)**2+(Y-2*a)**2)))
+	Z += I(np.arctan(np.sqrt((X-2*a)**2+(Y-2*a)**2)))
 
 	return Z
 
