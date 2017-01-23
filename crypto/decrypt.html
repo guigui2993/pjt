@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>CryptoJS Encrypt Example</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	<script src="rollups/aes.js"></script>
+	<script src="crypt.js"></script>
+</head>
+<body>
+<input type="password" name="pwd" id="pwd"/>
+<button onClick="decrypt()">Decrypt</button>
+<p id="txt1"></p>
+<table id="excelDataTable" border="1">
+</table>
+<script>
+	var myList;
+	var notYet = true;
+	var displayed = false;
+	function decrypt(list){
+		pwd = $("#pwd").val();
+		decrypted = CryptoJS.AES.decrypt(crypt, pwd).toString(CryptoJS.enc.Utf8);
+		myList = JSON.parse(decrypted);
+	}
+	// Builds the HTML Table out of myList.
+	function buildHtmlTable(selector) {
+		var columns = addAllColumnHeaders(myList, selector);
+
+		for (var i = 0; i < myList.length; i++) {
+			var row$ = $('<tr/>');
+			for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+				var cellValue = myList[i][columns[colIndex]];
+				if (cellValue == null) cellValue = "";
+				row$.append($('<td/>').html(cellValue));
+			}
+			$(selector).append(row$);
+		}
+	}
+
+	// Adds a header row to the table and returns the set of columns.
+	// Need to do union of keys from all records as some records may not contain
+	// all records.
+	function addAllColumnHeaders(myList, selector) {
+		var columnSet = [];
+		var headerTr$ = $('<tr/>');
+
+		for (var i = 0; i < myList.length; i++) {
+			var rowHash = myList[i];
+			for (var key in rowHash) {
+				if ($.inArray(key, columnSet) == -1) {
+					columnSet.push(key);
+					headerTr$.append($('<th/>').html(key));
+				}
+			}
+		}
+		$(selector).append(headerTr$);
+
+		return columnSet;
+	}
+
+
+	$('body').keypress(function(event){
+		if(event.which == 118){
+			if(notYet){
+				buildHtmlTable('#excelDataTable');
+				$("#excelDataTable").show()
+				notYet = false;
+				displayed = true;
+			}else if(displayed){
+				$("#excelDataTable").hide()
+				displayed = false;
+			}else{
+				$("#excelDataTable").show()
+				displayed = true;
+			}
+				
+		}
+	});
+	$("#excelDataTable").hide()
+</script>
+</body>
+</html>
